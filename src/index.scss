@@ -2,18 +2,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 :root {
-  --primary-color: #ec3d25;
+  --primary-color: rgb(10, 104, 255);
+  --primary-color-hover: rgba(10, 104, 255, 0.2);
+  --primaty-color-backgound: #f5f5fa;
   --second-color: #f46f25;
   --white-color: white;
   --black-color: black;
-  --gray-color: #cccbcb;
+  --gray-color: #fbf9f1;
   --gray-color-2: #efefef;
-  --primary-admin-color: #022e6c;
-  --second-admin-color: #2a528a;
 
   --text-fontSize: 1.8rem;
-  --title-fontSize: 2.8rem;
-  --small-fontSize: 1.6rem;
+  --text-product-fontSize: 1.5rem;
+  --title-fontSize: 2.4rem;
+  --small-fontSize: 1.2rem;
+  --width-space: 4rem;
 }
 
 * {
@@ -69,11 +71,11 @@ html *::-webkit-scrollbar {
 }
 html ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: var(--second-color);
+  background-color: transparent;
 }
 html *::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: var(--second-color);
+  background-color: transparent;
 }
 html ::-webkit-scrollbar-track {
   border-radius: 0px;

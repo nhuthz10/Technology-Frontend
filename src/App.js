@@ -1,29 +1,50 @@
 import "./App.scss";
-import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "./redux/userSlice";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage/HomePage.jsx";
+import ProductPage from "./pages/ProductPage/ProductPage.jsx";
+import NotFound from "./pages/NotFoundPage/NotFound.jsx";
+import LayoutUser from "./layout/LayoutUser.jsx";
+import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage.jsx";
+import { path } from "./utils";
 
 function App() {
-  const count = useSelector((state) => state.counter.value);
-  const dispatch = useDispatch();
-
   return (
-    <div>
-      <div>
-        <button
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          Increment
-        </button>
-        <span>{count}</span>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
-      </div>
-    </div>
+    <Routes>
+      <Route
+        path=""
+        element={
+          <LayoutUser>
+            <HomePage />
+          </LayoutUser>
+        }
+      ></Route>
+      <Route
+        path={path.HOME}
+        element={
+          <LayoutUser>
+            <HomePage />
+          </LayoutUser>
+        }
+      ></Route>
+      <Route
+        path={path.PRODUCT}
+        element={
+          <LayoutUser>
+            <ProductPage />
+          </LayoutUser>
+        }
+      ></Route>
+      <Route
+        path={path.PRODUCT_DETAIL}
+        element={
+          <LayoutUser>
+            <ProductDetailPage />
+          </LayoutUser>
+        }
+      ></Route>
+
+      <Route path={path.NOT_FOUND} element={<NotFound />}></Route>
+    </Routes>
   );
 }
 

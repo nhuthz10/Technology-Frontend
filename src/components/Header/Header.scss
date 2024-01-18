@@ -1,0 +1,104 @@
+.header-container {
+  padding: 0 var(--width-space);
+  background-color: var(--white-color);
+  height: 100px;
+  display: flex;
+
+  .header-logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: var(--width-space);
+    .header-logo-img {
+      height: 60px;
+      width: 60px;
+      border-radius: 10px;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .header-content {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+
+    .header-wrap-search-option {
+      display: flex;
+      .header-search {
+        margin-right: auto;
+      }
+      .header-wrap-option-cart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .header-option {
+          margin-right: 16px;
+
+          .header-option-login {
+            color: rgb(128, 128, 137);
+            border: 1px solid rgb(221, 221, 227);
+            font-size: var(--text-fontSize);
+            border-radius: 8px;
+            padding: 0 10px;
+            height: 45px;
+
+            &:hover {
+              background-color: rgba(39, 39, 42, 0.12);
+            }
+          }
+        }
+        .header-cart {
+          font-size: 24px;
+          height: 45px;
+          width: 50px;
+          display: flex;
+          color: var(--primary-color);
+          align-items: center;
+          justify-content: center;
+          border-radius: 8px;
+          position: relative;
+
+          .header-cart-notification {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: var(--small-fontSize);
+            background: rgb(255, 66, 79);
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            top: -8px;
+            right: 4px;
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: var(--primary-color-hover);
+          }
+        }
+      }
+    }
+
+    .header-product-type {
+      font-size: var(--text-fontSize);
+
+      .product-type-item {
+        color: rgb(128, 128, 137);
+        margin-right: 14px;
+
+        &:hover {
+          cursor: pointer;
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+}

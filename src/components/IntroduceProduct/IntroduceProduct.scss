@@ -1,0 +1,15 @@
+.introduce-product-container {
+  width: calc(100% - 300px);
+
+  .suggestion-today {
+    padding: 26px 20px;
+    border-radius: 10px;
+    background: var(--white-color);
+    margin-bottom: 20px;
+
+    .suggestion-today-title {
+      font-size: var(--title-fontSize);
+      margin-bottom: 18px;
+    }
+  }
+}
