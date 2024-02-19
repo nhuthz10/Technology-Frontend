@@ -5,6 +5,7 @@ import ProductPage from "./pages/ProductPage/ProductPage.jsx";
 import NotFound from "./pages/NotFoundPage/NotFound.jsx";
 import LayoutUser from "./layout/LayoutUser.jsx";
 import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage.jsx";
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import { path } from "./utils";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           </LayoutUser>
         }
       ></Route>
+      <Route path={path.LOGIN} element={<LoginPage />}></Route>
       <Route
         path={path.HOME}
         element={

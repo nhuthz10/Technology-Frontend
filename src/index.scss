@@ -5,6 +5,7 @@
   --primary-color: rgb(10, 104, 255);
   --primary-color-hover: rgba(10, 104, 255, 0.2);
   --primaty-color-backgound: #f5f5fa;
+  --error-color: #bf1650;
   --second-color: #f46f25;
   --white-color: white;
   --black-color: black;
@@ -14,6 +15,8 @@
   --text-fontSize: 1.8rem;
   --text-product-fontSize: 1.5rem;
   --title-fontSize: 2.4rem;
+  --title-small-fontSize: 2rem;
+  --title-sub-fontSize: 1.6rem;
   --small-fontSize: 1.2rem;
   --width-space: 4rem;
 }
@@ -60,6 +63,17 @@ input::-ms-clear {
   display: none;
 }
 
+.log-error {
+  margin-top: 10px;
+  font-size: var(--text-product-fontSize);
+  color: var(--error-color);
+
+  &::before {
+    display: inline;
+    content: "⚠ ";
+  }
+}
+
 // custom scrollbar
 html ::-webkit-scrollbar {
   border-radius: 0px;
@@ -71,11 +85,11 @@ html *::-webkit-scrollbar {
 }
 html ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: transparent;
+  background-color: #dfdfde;
 }
 html *::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: transparent;
+  background-color: #dfdfde;
 }
 html ::-webkit-scrollbar-track {
   border-radius: 0px;

@@ -1,0 +1,14 @@
+.loading-container {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+  .loading-orverlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.5);
+  }
+}

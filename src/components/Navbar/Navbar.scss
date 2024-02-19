@@ -5,8 +5,11 @@
   top: 20px;
   padding: 14px 8px;
   border-radius: 8px;
-  max-height: 100vh;
+  max-height: 660px;
   overflow-y: scroll;
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
 
   .nav-title {
     font-size: var(--title-fontSize);

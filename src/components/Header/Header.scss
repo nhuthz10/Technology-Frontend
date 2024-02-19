@@ -38,18 +38,49 @@
         justify-content: center;
 
         .header-option {
+          display: flex;
           margin-right: 16px;
 
           .header-option-login {
+            display: flex;
+            align-items: center;
             color: rgb(128, 128, 137);
-            border: 1px solid rgb(221, 221, 227);
             font-size: var(--text-fontSize);
+            font-weight: 500;
             border-radius: 8px;
             padding: 0 10px;
             height: 45px;
 
+            .header-option-icon-login {
+              margin-right: 10px;
+              font-size: 24px;
+            }
+
             &:hover {
               background-color: rgba(39, 39, 42, 0.12);
+            }
+          }
+          .header-option-home {
+            display: flex;
+            align-items: center;
+            color: rgb(128, 128, 137);
+            font-weight: 500;
+            font-size: var(--text-fontSize);
+            border-radius: 8px;
+            padding: 0 12px;
+            height: 45px;
+
+            .header-option-icon-home {
+              margin-right: 10px;
+              font-size: 24px;
+              position: relative;
+              bottom: 2px;
+              width: 24px;
+            }
+
+            &:hover {
+              cursor: pointer;
+              background-color: var(--primary-color-hover);
             }
           }
         }
