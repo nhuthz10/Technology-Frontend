@@ -9,12 +9,20 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { useForm } from "react-hook-form";
-
+import { useDispatch } from "react-redux";
+import { isLoading } from "../../redux/appSlice";
+import useMutationHook from "../../hooks/useMutationHook";
 import {
   handleCreateUserService,
   handleCheckUserExistService,
+  handleLoginService,
+  handleGetDetailUserService,
 } from "../../services/userService";
-import { regex } from "../../utils/constants";
+import {
+  handleChangeAccessToken,
+  handleChangeUserInfor,
+} from "../../redux/userSlice";
+import { jwtDecode } from "jwt-decode";
 import "./LoginPage.scss";
 
 const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
@@ -25,6 +33,7 @@ const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
   const [enterPassword, setEnterPassword] = useState(false);
   const [enterAccount, setEnterAccount] = useState(false);
   const [forgotPassword, setForgotPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -33,6 +42,64 @@ const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
     getValues,
     setValue,
   } = useForm();
+
+  const mutation = useMutationHook((data) => handleCreateUserService(data));
+  const { data, isPending, isSuccess } = mutation;
+
+  const mutationLogin = useMutationHook((data) => handleLoginService(data));
+
+  const dataLogin = mutationLogin.data;
+  const isPendingLogin = mutationLogin.isPending;
+  const isSuccessLogin = mutationLogin.isSuccess;
+  // const isErrorLogin = mutationLogin.isError;
+  // const errorLogin = mutation.error.response
+
+  useEffect(() => {
+    if (isPending) {
+      dispatch(isLoading(true));
+    } else {
+      dispatch(isLoading(false));
+    }
+
+    if (isSuccess) {
+      setEnterAccount(false);
+      setEnterUserName(true);
+      setValue("fullName", "");
+      setValue("userNameRegister", "");
+      setValue("passwordRegister", "");
+      setValue("confirmPassword", "");
+      setValue("userName", data);
+    }
+  }, [dispatch, isPending, isSuccess, data, setValue]);
+
+  useEffect(() => {
+    if (isPendingLogin) {
+      dispatch(isLoading(true));
+    } else {
+      dispatch(isLoading(false));
+    }
+
+    if (isSuccessLogin) {
+      console.log(dataLogin?.access_token);
+      dispatch(handleChangeAccessToken(dataLogin?.access_token));
+      if (dataLogin?.access_token) {
+        const decoded = jwtDecode(dataLogin?.access_token);
+        if (decoded?.id) {
+          getDetailUser(decoded?.id, dataLogin?.access_token);
+        }
+      }
+      // handleClose();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataLogin, dispatch, isPendingLogin, isSuccessLogin]);
+
+  const getDetailUser = async (userId, access_token) => {
+    let res = await handleGetDetailUserService(userId, access_token);
+    if (res.errCode === 0) {
+      dispatch(handleChangeUserInfor(res.data));
+    }
+  };
 
   const handleClose = () => {
     setEnterUserName(true);
@@ -85,6 +152,7 @@ const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
 
   const onSubmitUserName = async (data) => {
     try {
+      dispatch(isLoading(true));
       let res = await handleCheckUserExistService(data.userName);
       if (res.errCode === 0) {
         if (res.data) {
@@ -97,30 +165,24 @@ const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 
-  const onSubmitPassword = (data) => {};
+  const onSubmitPassword = (data) => {
+    mutationLogin.mutate({
+      userName: data.userName,
+      password: data.password,
+    });
+  };
 
   const onSubmitAccount = async (data) => {
-    try {
-      let res = await handleCreateUserService({
-        fullName: data.fullName,
-        userName: data.userNameRegister,
-        password: data.passwordRegister,
-      });
-      if (res.errCode === 0) {
-        setEnterAccount(false);
-        setEnterUserName(true);
-        setValue("fullName", "");
-        setValue("userNameRegister", "");
-        setValue("passwordRegister", "");
-        setValue("confirmPassword", "");
-        setValue("userName", res.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    mutation.mutate({
+      fullName: data.fullName,
+      userName: data.userNameRegister,
+      password: data.passwordRegister,
+    });
   };
 
   return (
@@ -224,9 +286,10 @@ const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
                       <p className="log-error">{errors.password.message}</p>
                     )}
                   </div>
+                  <button className="login-btn-continue" type="submit">
+                    Đăng nhập
+                  </button>
                 </form>
-
-                <button className="login-btn-continue">Đăng nhập</button>
                 <p className="login-forgot-password-title">Quên mật khẩu</p>
               </div>
             </>
