@@ -19,11 +19,12 @@ import {
   handleGetDetailUserService,
 } from "../../services/userService";
 import {
-  handleChangeAccessToken,
+  handleChangeLogin,
   handleChangeUserInfor,
 } from "../../redux/userSlice";
 import { jwtDecode } from "jwt-decode";
 import "./LoginPage.scss";
+import { toast } from "react-toastify";
 
 const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -51,8 +52,8 @@ const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
   const dataLogin = mutationLogin.data;
   const isPendingLogin = mutationLogin.isPending;
   const isSuccessLogin = mutationLogin.isSuccess;
-  // const isErrorLogin = mutationLogin.isError;
-  // const errorLogin = mutation.error.response
+  const isErrorLogin = mutationLogin?.isError;
+  const errorLogin = mutationLogin?.error?.response?.data;
 
   useEffect(() => {
     if (isPending) {
@@ -80,24 +81,37 @@ const LoginPage = ({ isOpenLogin, setIsOpenLogin }) => {
     }
 
     if (isSuccessLogin) {
-      console.log(dataLogin?.access_token);
-      dispatch(handleChangeAccessToken(dataLogin?.access_token));
+      localStorage.setItem("access_token", dataLogin?.access_token);
+      localStorage.setItem("refresh_token", dataLogin?.refresh_token);
       if (dataLogin?.access_token) {
         const decoded = jwtDecode(dataLogin?.access_token);
         if (decoded?.id) {
           getDetailUser(decoded?.id, dataLogin?.access_token);
         }
       }
-      // handleClose();
+    }
+    if (isErrorLogin) {
+      if (errorLogin.errCode === 2) {
+        toast.error("Mật khẩu của bạn không đúng");
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataLogin, dispatch, isPendingLogin, isSuccessLogin]);
+  }, [
+    dataLogin,
+    dispatch,
+    isPendingLogin,
+    isSuccessLogin,
+    isErrorLogin,
+    errorLogin,
+  ]);
 
   const getDetailUser = async (userId, access_token) => {
     let res = await handleGetDetailUserService(userId, access_token);
     if (res.errCode === 0) {
       dispatch(handleChangeUserInfor(res.data));
+      dispatch(handleChangeLogin(true));
+      handleClose();
     }
   };
 

@@ -83,6 +83,24 @@
               background-color: var(--primary-color-hover);
             }
           }
+
+          .account-option-list {
+            width: 240px;
+            background: rgb(255, 255, 255);
+            border-radius: 10px;
+            border: 1px solid rgb(239, 239, 239);
+            box-shadow: rgba(0, 0, 0, 0.18) 0px 6px 12px 0px;
+            font-size: var(--text-fontSize);
+
+            .account-option-item {
+              padding: 14px 18px;
+
+              &:hover {
+                cursor: pointer;
+                background-color: #f0f0f0;
+              }
+            }
+          }
         }
         .header-cart {
           font-size: 24px;

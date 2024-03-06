@@ -1,4 +1,5 @@
 import axios from "../axios";
+import { axiosJWT } from "../axios";
 
 let handleCreateUserService = async (data) => {
   let res = await axios.post("/api/user/create-user", data);
@@ -21,7 +22,7 @@ let handleGetAllUser = () => {
 };
 
 let handleGetDetailUserService = async (id, access_token) => {
-  let res = await axios.get(`/api/user/get-detail-user?userId=${id}`, {
+  let res = await axiosJWT.get(`/api/user/get-detail-user?userId=${id}`, {
     headers: {
       token: `Bearer ${access_token}`,
     },
@@ -30,11 +31,15 @@ let handleGetDetailUserService = async (id, access_token) => {
 };
 
 let handleRefershTokenService = async (refresh_token) => {
-  let res = await axios.post(`/api/user/refresh-token`, {
-    headers: {
-      token: `Bearer ${refresh_token}`,
-    },
-  });
+  let res = await axios.post(
+    `/api/user/refresh-token`,
+    {},
+    {
+      headers: {
+        token: `Bearer ${refresh_token}`,
+      },
+    }
+  );
   return res.access_token;
 };
 

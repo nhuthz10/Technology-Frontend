@@ -22,7 +22,7 @@ const persistCommonConfig = {
 const userPersistConfig = {
   ...persistCommonConfig,
   key: "user",
-  whitelist: ["access_token", "userInfor"],
+  whitelist: ["userInfor", "isLogin"],
 };
 
 const store = configureStore({

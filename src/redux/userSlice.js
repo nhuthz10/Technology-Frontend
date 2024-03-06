@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  access_token: null,
+  isLogin: false,
   userInfor: {},
 };
 
@@ -9,16 +9,15 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    handleChangeAccessToken: (state, actions) => {
-      state.access_token = actions.payload;
-    },
     handleChangeUserInfor: (state, actions) => {
       state.userInfor = actions.payload;
+    },
+    handleChangeLogin: (state, actions) => {
+      state.isLogin = actions.payload;
     },
   },
 });
 
-export const { handleChangeAccessToken, handleChangeUserInfor } =
-  userSlice.actions;
+export const { handleChangeUserInfor, handleChangeLogin } = userSlice.actions;
 
 export default userSlice.reducer;
